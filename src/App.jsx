@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { categories, products } from "./data/products";
 import logoImage from "./assets/goutham-logo.png";
 
@@ -242,6 +242,10 @@ function SectionHeading({ eyebrow, title, text }) {
 function ProductModal({ product, onClose, onBuy, onAddToCart }) {
   const [slide, setSlide] = useState(0);
 
+  useEffect(() => {
+    setSlide(0);
+  }, [product?.id]);
+
   if (!product) {
     return null;
   }
@@ -433,11 +437,8 @@ function Newsletter() {
       return;
     }
 
-    const formattedMessage = `Hi Goutham Computers, I want to join the WhatsApp group. My number is ${trimmedPhone}.`;
-    const url = `${WHATSAPP_GROUP_URL}?text=${encodeURIComponent(formattedMessage)}`;
-
-    window.open(url, "_blank", "noopener,noreferrer");
-    setMessage("Thanks! Your WhatsApp number has been sent to the group invite.");
+    window.open(WHATSAPP_GROUP_URL, "_blank", "noopener,noreferrer");
+    setMessage(`Thanks! Opening the WhatsApp group invite for ${trimmedPhone}.`);
     setPhone("");
   };
 
